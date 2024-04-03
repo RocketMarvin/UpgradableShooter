@@ -7,10 +7,14 @@ public class PositionSwitch : MonoBehaviour
 {
     public GameObject camera1;
     public GameObject camera2;
-    public int camManager = 0;
+
+    public static int camManager = 0;
     public bool timerBool = false;
     public float cooldown = 5;
+
     public TextMeshProUGUI cooldownTimer;
+
+    public bool bunkerSwitch = false;
 
     public void Update()
     {

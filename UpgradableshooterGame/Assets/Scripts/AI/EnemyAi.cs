@@ -22,23 +22,21 @@ public class EnemyAi : MonoBehaviour
     {
         if (HP <= 0)
         {
+            Destroy(gameObject);
+        }
+        barHP.fillAmount = HP / 100;
+        if (HP <= 0)
+        {
             isDead = true;
         }
-
-        if (Crosshair.attacked == true)
-        {
-            HP -= damage;
-        }
-
-        barHP.fillAmount = HP / 100;
-
         if (!isDead)
         {
             agent.destination = Camera.main.transform.position;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+    }
+    public void TakeDamage(float damage)
+    {
+        HP -= damage;
+        
     }
 }
