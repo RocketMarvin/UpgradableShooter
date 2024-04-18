@@ -5,6 +5,8 @@ using UnityEngine;
 public class Crosshair : MonoBehaviour
 {
     public float damage = 10;
+    public float fireRate = 15;
+    private float nextTimeToFire = 0;
     public float range = 100;
 
     public ParticleSystem muzzleFlash1, muzzleFlash2;
@@ -19,8 +21,9 @@ public class Crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
         {
+            nextTimeToFire = Time.time + 1f/fireRate;
             ShootingLogic();
         }
 
