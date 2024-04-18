@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class WaveSpawner : MonoBehaviour
 
     public float timeBetweenWaves = 5f;
     private float waveCountdown;
+    public TextMeshProUGUI waveCountDownTxt;
 
     public float searchCountdown = 1f;
 
@@ -56,6 +58,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveCountdown <= 0)
         {
+            waveCountDownTxt.gameObject.SetActive(false);
             if (state != spawnState.SPAWNING)
             {
                 StartCoroutine(SpawnWave(waves[nextWave]));
@@ -64,6 +67,8 @@ public class WaveSpawner : MonoBehaviour
         else
         {
             waveCountdown -= Time.deltaTime;
+            waveCountDownTxt.text = ("Next Wave in: " + Mathf.Round(waveCountdown).ToString());
+            waveCountDownTxt.gameObject.SetActive(true);
         }
     }
 
@@ -81,6 +86,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         nextWave++;
+
 
     }
 

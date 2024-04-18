@@ -10,11 +10,16 @@ public class PositionSwitch : MonoBehaviour
 
     public static int camManager = 0;
     public bool timerBool = false;
+    private bool camToggle = false;
     public float cooldown = 5;
 
     public TextMeshProUGUI cooldownTimer;
 
     public bool bunkerSwitch = false;
+    private void Start()
+    {
+        camManager = 0;
+    }
 
     public void Update()
     {
@@ -33,6 +38,7 @@ public class PositionSwitch : MonoBehaviour
     {
         if (cooldown <= 0)
         {
+            camToggle = !camToggle;
             GetComponent<Animator>().SetTrigger("Change");
             timerBool = false;
             cooldown = 5;
@@ -52,7 +58,7 @@ public class PositionSwitch : MonoBehaviour
 
     public void ManageCamera()
     {
-        if (camManager == 0)
+        if (camToggle)
         {
             Cam_2();
             camManager = 1;

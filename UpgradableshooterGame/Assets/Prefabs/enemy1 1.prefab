@@ -245,7 +245,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 100
-  damage: 20
+  attackDamage: 50
+  shootingDamage: 20
+  attackRange: 3
+  attackTimer: 1
+  player: {fileID: 0}
+  enemy: {fileID: 0}
   barHP: {fileID: 2495463968558746395}
 --- !u!1 &3699085549070383890
 GameObject:

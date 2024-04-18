@@ -3,59 +3,99 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class ShopManager : MonoBehaviour
 {
-    public int coins;
+    public static int coins;
     public TMP_Text coinsText;
     public ShopItemSD[] shopitemSO;
-    public GameObject[] shopPanelsGO;
+    public GameObject[] shopPanelsGO, weaponsArray;
     public ShopTemplate[] shopPanels;
     public Button[] myPurchaseButtons;
-     
+    public TextMeshProUGUI[] myEquipTexts;
+    private bool gekocht = false, equiped = false, wo = false, notBought = true;
+    private int btnEQ;
     // Start is called before the first frame update
     void Start()
     {
+        coins = 0;
         for (int i = 0; i < shopitemSO.Length; i++)
             shopPanelsGO[i].gameObject.SetActive(true);
         coinsText.text = "Coins: " + coins.ToString();
         LoadPanels();
         CheckPurchaseable();
+        wo = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        EquipPurchasedItem();
+        AddCoins();
     }
 
     public void CheckPurchaseable()
     {
         for (int i = 0; i < shopitemSO.Length; i++)
         {
-            if (coins >= shopitemSO[i].basecost)
+            if (!gekocht)
             {
-                myPurchaseButtons[i].interactable = true;
+                if (coins >= shopitemSO[i].basecost)
+                {
+                    myPurchaseButtons[i].interactable = true;
+                }
+                else
+                {
+                    myPurchaseButtons[i].interactable = false;
+                }
             }
-            else
-            {
-                myPurchaseButtons[i].interactable = false;
-            }
+            else myPurchaseButtons[btnEQ].interactable = true;
         }
     }
     public void PurchaseItem(int btnNo)
     {
-        if (coins >= shopitemSO[btnNo].basecost)
+        if (coins >= shopitemSO[btnNo].basecost && gekocht == false)
         {
-            coins =  coins - shopitemSO[btnNo].basecost;
+            btnEQ = btnNo;
+            gekocht = true;
+            coins = coins - shopitemSO[btnNo].basecost;
             coinsText.text = "Coins: " + coins.ToString();
             CheckPurchaseable();
         }
+        else if (gekocht)
+        {
+            equiped = true;
+            if (equiped && !wo)
+            {
+                foreach (GameObject gameObject in weaponsArray)
+                {
+                    gameObject.SetActive(false);
+                    print(gameObject);
+                }
+                wo = true;
+            }
+                
+            if (equiped && wo)
+            {
+                weaponsArray[btnNo].SetActive(true);
+                equiped = false;
+                wo = false;
+            }
+        }
+    }
+    private void EquipPurchasedItem()
+    {
+        if(gekocht == true)
+        {
+            myEquipTexts[btnEQ].text = ("Equip");
+        }
+
+        
     }
 
-    public void AddCoins()
+    private void AddCoins()
     {
-        coins++;
         coinsText.text = "Coins: " + coins.ToString();
         CheckPurchaseable();
     }
