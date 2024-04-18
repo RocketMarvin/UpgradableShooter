@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Glock 18
   description: A handgun with a magazine size of 19 bullets
-  basecost: 500
+  basecost: 0
+  attackDamage: 0
+  fireRate: 0
+  bought: 0

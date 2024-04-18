@@ -1,11 +1,13 @@
 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public class Crosshair : MonoBehaviour
 {
     public float damage = 10;
-    public float fireRate = 15;
+    public float fireRate = 5;
     private float nextTimeToFire = 0;
     public float range = 100;
 

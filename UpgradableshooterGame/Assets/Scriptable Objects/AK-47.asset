@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: AK-47
   description: A full automatic gun
-  basecost: 300
+  basecost: 0
+  attackDamage: 3
+  fireRate: 5
+  bought: 1

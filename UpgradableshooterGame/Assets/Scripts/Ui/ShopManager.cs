@@ -14,7 +14,7 @@ public class ShopManager : MonoBehaviour
     public ShopTemplate[] shopPanels;
     public Button[] myPurchaseButtons;
     public TextMeshProUGUI[] myEquipTexts;
-    private bool gekocht = false, equiped = false, wo = false, notBought = true;
+    private bool gekocht = false;
     private int btnEQ;
     // Start is called before the first frame update
     void Start()
@@ -25,13 +25,11 @@ public class ShopManager : MonoBehaviour
         coinsText.text = "Coins: " + coins.ToString();
         LoadPanels();
         CheckPurchaseable();
-        wo = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        EquipPurchasedItem();
         AddCoins();
     }
 
@@ -50,48 +48,23 @@ public class ShopManager : MonoBehaviour
                     myPurchaseButtons[i].interactable = false;
                 }
             }
-            else myPurchaseButtons[btnEQ].interactable = true;
+            else myPurchaseButtons[btnEQ].interactable = false;
         }
     }
     public void PurchaseItem(int btnNo)
     {
-        if (coins >= shopitemSO[btnNo].basecost && gekocht == false)
+        if (coins >= shopitemSO[btnNo].basecost)
         {
             btnEQ = btnNo;
-            gekocht = true;
             coins = coins - shopitemSO[btnNo].basecost;
             coinsText.text = "Coins: " + coins.ToString();
+            myEquipTexts[btnEQ].text = ("Bought");
+            for (int i = 0; i < weaponsArray.Length; i++)
+            {
+               //weaponsArray[i].
+            }
             CheckPurchaseable();
         }
-        else if (gekocht)
-        {
-            equiped = true;
-            if (equiped && !wo)
-            {
-                foreach (GameObject gameObject in weaponsArray)
-                {
-                    gameObject.SetActive(false);
-                    print(gameObject);
-                }
-                wo = true;
-            }
-                
-            if (equiped && wo)
-            {
-                weaponsArray[btnNo].SetActive(true);
-                equiped = false;
-                wo = false;
-            }
-        }
-    }
-    private void EquipPurchasedItem()
-    {
-        if(gekocht == true)
-        {
-            myEquipTexts[btnEQ].text = ("Equip");
-        }
-
-        
     }
 
     private void AddCoins()
