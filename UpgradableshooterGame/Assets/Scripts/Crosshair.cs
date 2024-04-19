@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,11 +17,12 @@ public class Crosshair : MonoBehaviour
 
     void Start()
     {
-        
+       
     }
     // Update is called once per frame
     void Update()
     {
+        //WeaponSwitching.selectedWeapon = gun1.
         if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f/fireRate;

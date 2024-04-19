@@ -308,6 +308,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedWeapon: 0
+  weapons:
+  - {fileID: 199669650145572954}
+  - {fileID: 1852653082}
 --- !u!1 &175224279
 GameObject:
   m_ObjectHideFlags: 0
@@ -16196,8 +16199,8 @@ MonoBehaviour:
   muzzleFlash2: {fileID: 1685262483}
   player1: {fileID: 127737733}
   player2: {fileID: 1065357716}
-  gun1: {fileID: 1852653082}
-  gun2: {fileID: 175224279}
+  gun1: {fileID: 199669650145572954}
+  gun2: {fileID: 486856830}
   groundImpactEffect: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}
   enemyImpactEffect: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   rotationSpeed: 5

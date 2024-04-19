@@ -4,19 +4,37 @@ using UnityEngine;
 
 public class WeaponSwitching : MonoBehaviour
 {
-    public int selectedWeapon;
+    public static int selectedWeapon;
+    public GameObject[] weapons;
 
     // Start is called before the first frame update
     void Start()
     {
         SelectWeapon();
+        selectedWeapon = weapons.Length;
     }
 
     // Update is called once per frame
     void Update()
     {
+        ScrollWeaponSwitch();
+    }
+
+    private void SelectWeapon()
+    {
+        int i = 0;
+        foreach (GameObject weapon in weapons)
+        {
+            if (i == selectedWeapon) weapon.gameObject.SetActive(true);
+            else weapon.gameObject.SetActive(false);
+            i++;
+        }
+    }
+
+    public void ScrollWeaponSwitch()
+    {
         Crosshair crosshair = new Crosshair();
-        
+
         int previousSelectedWeapon = selectedWeapon;
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
@@ -33,17 +51,6 @@ public class WeaponSwitching : MonoBehaviour
         if (previousSelectedWeapon != selectedWeapon)
         {
             SelectWeapon();
-        }
-    }
-
-    private void SelectWeapon()
-    {
-        int i = 0;
-        foreach (Transform weapon in transform)
-        {
-            if (i == selectedWeapon) weapon.gameObject.SetActive(true);
-            else weapon.gameObject.SetActive(false);
-            i++;
         }
     }
 }
