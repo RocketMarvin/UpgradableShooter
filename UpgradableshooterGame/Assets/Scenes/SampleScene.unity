@@ -16194,6 +16194,8 @@ MonoBehaviour:
   damage: 10
   fireRate: 5
   range: 100
+  maxAmmo: 10
+  reloadTime: 2
   muzzleFlash1: {fileID: 307479569}
   muzzleFlash2: {fileID: 1685262483}
   player1: {fileID: 127737733}
@@ -16206,7 +16208,9 @@ MonoBehaviour:
   selectedWeapon: 0
   weapons:
   - {fileID: 199669650145572954}
+  - {fileID: 486856830}
   - {fileID: 1852653082}
+  - {fileID: 175224279}
 --- !u!1 &486856830
 GameObject:
   m_ObjectHideFlags: 0

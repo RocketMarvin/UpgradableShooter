@@ -10,6 +10,11 @@ public class Crosshair : MonoBehaviour
     private float nextTimeToFire = 0;
     public float range = 100;
 
+    public int maxAmmo = 10;
+    public int currentAmmo;
+    public float reloadTime = 2;
+    private bool isReloading = false;
+
     public ParticleSystem muzzleFlash1, muzzleFlash2;
     public GameObject player1, player2, gun1, gun2, groundImpactEffect, enemyImpactEffect;
 
@@ -21,18 +26,11 @@ public class Crosshair : MonoBehaviour
     void Start()
     {
         SelectWeapon();
-
+        currentAmmo = maxAmmo;
     }
 
     void Update()
     {
-        ScrollWeaponSwitch();
-        if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f/fireRate;
-            ShootingLogic();
-        }
-
         if (PositionSwitch.camManager == 0)
         {
             player1.SetActive(true);
@@ -52,7 +50,7 @@ public class Crosshair : MonoBehaviour
             player1.SetActive(false);
             player2.SetActive(true);
             gun1.SetActive(false);
-            gun2.SetActive(true); 
+            gun2.SetActive(true);
 
             Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo2;
@@ -61,12 +59,44 @@ public class Crosshair : MonoBehaviour
                 gun2.transform.LookAt(hitInfo2.point);
             }
         }
+
+        if (isReloading)
+            return;
+
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+
+        ScrollWeaponSwitch();
+        if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
+        {
+            nextTimeToFire = Time.time + 1f/fireRate;
+            ShootingLogic();
+        }
+
+        
+        
+    }
+
+    public IEnumerator Reload()
+    {
+        isReloading = true;
+        print("Reloading");
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 
     private void ShootingLogic()
     {
         if (PositionSwitch.camManager == 0) muzzleFlash1.Play();
         else muzzleFlash2.Play();
+
+        currentAmmo--;
 
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
