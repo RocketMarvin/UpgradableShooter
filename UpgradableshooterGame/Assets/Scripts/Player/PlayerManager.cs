@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     {
         if(playerHealth <= 0)
         {
+            FindObjectOfType<Crosshair>().enabled = false;
+            Time.timeScale = 0;
             print("You dead");
             playerHealth = 0;
         }

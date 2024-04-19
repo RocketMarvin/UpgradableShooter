@@ -15,14 +15,18 @@ public class Crosshair : MonoBehaviour
 
     public float rotationSpeed = 5f;
 
+    public int selectedWeapon;
+    public GameObject[] weapons;
+
     void Start()
     {
-       
+        SelectWeapon();
+
     }
-    // Update is called once per frame
+
     void Update()
     {
-        //WeaponSwitching.selectedWeapon = gun1.
+        ScrollWeaponSwitch();
         if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f/fireRate;
@@ -76,6 +80,48 @@ public class Crosshair : MonoBehaviour
                 Instantiate(enemyImpactEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             }
             else Instantiate(groundImpactEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+        }
+    }
+    private void SelectWeapon()
+    {
+        int i = 0;
+        foreach (GameObject weapon in weapons)
+        {
+            if (selectedWeapon == 1)
+            {
+                weapon.SetActive(false);
+                gun1 = weapons[0];
+                gun2 = weapons[1];
+            }
+            else if (selectedWeapon == 2)
+            {
+                weapon.SetActive(false);
+                gun1 = weapons[2];
+                gun2 = weapons[3];
+            }
+            i++;
+        }
+    }
+
+    public void ScrollWeaponSwitch()
+    {
+
+        int previousSelectedWeapon = selectedWeapon;
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            if (selectedWeapon >= transform.childCount - 1) selectedWeapon = 0;
+            selectedWeapon++;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            if (selectedWeapon <= 1) selectedWeapon = transform.childCount;
+            selectedWeapon--;
+        }
+
+        if (previousSelectedWeapon != selectedWeapon)
+        {
+            SelectWeapon();
         }
     }
 }
