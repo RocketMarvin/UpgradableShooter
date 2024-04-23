@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e67224fe45cb33f4496b56f8579cd56e, type: 3}
-  m_Name: Glock18
+  m_Name: Revolver
   m_EditorClassIdentifier: 
-  title: Glock 18
+  title: Revolver
   description: A handgun with a magazine size of 19 bullets
   basecost: 0
-  attackDamage: 0
-  fireRate: 0
-  bought: 0
+  maxAmmo: 6
+  currentAmmo: 0
+  attackDamage: 50
+  fireRate: 1
+  bought: 1

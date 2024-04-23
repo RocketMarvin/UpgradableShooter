@@ -9,6 +9,8 @@ public class ShopItemSD : ScriptableObject
     public string title;
     public string description;
     public int basecost;
+    public int maxAmmo;
+    public int currentAmmo;
     public int attackDamage;
     public float fireRate;
     public bool bought;

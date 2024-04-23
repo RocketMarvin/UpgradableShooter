@@ -5,28 +5,37 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
-    public float damage = 10;
-    public float fireRate = 5;
+    [SerializeField] float damage;
+    [SerializeField] float fireRate;
     private float nextTimeToFire = 0;
-    public float range = 100;
 
-    public int maxAmmo = 10;
+    public ShopItemSD revolver;
+    public ShopItemSD AK47;
+
+    public int maxAmmo;
     public int currentAmmo;
+    [SerializeField] int localRevolverAmmo;
+    [SerializeField] int localAK47Ammo;
+
     public float reloadTime = 2;
     private bool isReloading = false;
 
     public ParticleSystem muzzleFlash1, muzzleFlash2;
     public GameObject player1, player2, gun1, gun2, groundImpactEffect, enemyImpactEffect;
 
-    public float rotationSpeed = 5f;
-
     public int selectedWeapon;
     public GameObject[] weapons;
-
+    private void Awake()
+    {
+        currentAmmo = maxAmmo;
+        localRevolverAmmo = revolver.maxAmmo;
+        localAK47Ammo = AK47.maxAmmo;
+    }
     void Start()
     {
-        SelectWeapon();
-        currentAmmo = maxAmmo;
+        fireRate = revolver.fireRate;
+        damage = revolver.attackDamage;
+        selectedWeapon = 1;
     }
 
     void Update()
@@ -63,7 +72,7 @@ public class Crosshair : MonoBehaviour
         if (isReloading)
             return;
 
-        if (currentAmmo <= 0)
+        if (localAK47Ammo <= 0 || localRevolverAmmo <= 0)
         {
             StartCoroutine(Reload());
             return;
@@ -72,12 +81,10 @@ public class Crosshair : MonoBehaviour
         ScrollWeaponSwitch();
         if (Input.GetMouseButton(0) && Time.time > nextTimeToFire)
         {
-            nextTimeToFire = Time.time + 1f/fireRate;
+            nextTimeToFire = Time.time + 1f / fireRate;
             ShootingLogic();
         }
 
-        
-        
     }
 
     public IEnumerator Reload()
@@ -86,8 +93,14 @@ public class Crosshair : MonoBehaviour
         print("Reloading");
 
         yield return new WaitForSeconds(reloadTime);
-
-        currentAmmo = maxAmmo;
+        if (selectedWeapon == 1)
+        {
+            localRevolverAmmo = maxAmmo;
+        }
+        else if (selectedWeapon == 2)
+        {
+            localAK47Ammo = maxAmmo;
+        }
         isReloading = false;
     }
 
@@ -96,7 +109,16 @@ public class Crosshair : MonoBehaviour
         if (PositionSwitch.camManager == 0) muzzleFlash1.Play();
         else muzzleFlash2.Play();
 
-        currentAmmo--;
+        //currentAmmo--;
+
+        if (selectedWeapon == 1)
+        {
+            localRevolverAmmo--;
+        }
+        else if (selectedWeapon == 2)
+        {
+            localAK47Ammo--;
+        }
 
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -105,7 +127,7 @@ public class Crosshair : MonoBehaviour
             if (hitInfo.collider.CompareTag("Enemy"))
             {
                 EnemyAi enemyAi = hitInfo.transform.GetComponent<EnemyAi>();
-                enemyAi.HP -= enemyAi.shootingDamage;
+                enemyAi.HP -= damage;
 
                 Instantiate(enemyImpactEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             }
@@ -119,12 +141,20 @@ public class Crosshair : MonoBehaviour
         {
             if (selectedWeapon == 1)
             {
+                fireRate = revolver.fireRate;
+                damage = revolver.attackDamage;
+                maxAmmo = revolver.maxAmmo;
+                currentAmmo = localRevolverAmmo;
                 weapon.SetActive(false);
                 gun1 = weapons[0];
                 gun2 = weapons[1];
             }
             else if (selectedWeapon == 2)
             {
+                fireRate = AK47.fireRate;
+                damage = AK47.attackDamage;
+                maxAmmo = AK47.maxAmmo;
+                currentAmmo = localAK47Ammo;
                 weapon.SetActive(false);
                 gun1 = weapons[2];
                 gun2 = weapons[3];

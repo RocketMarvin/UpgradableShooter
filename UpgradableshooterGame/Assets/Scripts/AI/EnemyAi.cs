@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyAi : MonoBehaviour
 {
     private NavMeshAgent agent;
+    public ShopItemSD weaponDamage;
     public float HP = 100, attackDamage = 5, shootingDamage = 20, attackRange = 3, attackTimer = 3;
     private float distance, attackTimer_Script = 3;
     public GameObject player, enemy;
@@ -27,7 +28,7 @@ public class EnemyAi : MonoBehaviour
         HealthBehaviour();
         DealDamage();
     }
-    public void TakeDamage(float damage) => HP -= damage;
+    //public void TakeDamage(float damage) => HP -= damage;
 
     private void HealthBehaviour()
     {

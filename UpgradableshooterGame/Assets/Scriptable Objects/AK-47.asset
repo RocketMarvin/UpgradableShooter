@@ -15,6 +15,8 @@ MonoBehaviour:
   title: AK-47
   description: A full automatic gun
   basecost: 0
-  attackDamage: 3
+  maxAmmo: 30
+  currentAmmo: 0
+  attackDamage: 20
   fireRate: 5
-  bought: 1
+  bought: 0

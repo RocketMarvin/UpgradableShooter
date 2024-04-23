@@ -244,8 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692bc84fa9d8c4f4eb9f62c634248f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDamage: {fileID: 0}
   HP: 100
-  attackDamage: 50
+  attackDamage: 5
   shootingDamage: 20
   attackRange: 3
   attackTimer: 1
